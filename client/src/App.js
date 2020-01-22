@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import {Route} from "react-router-dom";
+import {Route, Switch} from "react-router-dom";
 import Movie from "./Movies/Movie.js";
+import MovieList from "./Movies/MovieList.js";
 
 import SavedList from './Movies/SavedList';
 
-const App = () => {
+const App = (props) => {
   const [savedList, setSavedList] = useState( [] );
 
   const addToSavedList = movie => {
@@ -14,10 +15,15 @@ const App = () => {
   return (
     <div>
       <SavedList list={savedList} />
-      <Route path={`/movies/:id`}>
-      {/*might want to try switching the :${id} with just :id*/}
-        <Movie />
-      </Route>
+      <Switch>
+        <Route path={`/movies/:${props.id}`}>
+          <Movie />
+        </Route>
+        <Route path="/">
+          <MovieList />
+        </Route>
+      </Switch>
+
     </div>
   );
 };
